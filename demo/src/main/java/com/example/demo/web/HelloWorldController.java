@@ -23,7 +23,12 @@ public class HelloWorldController {
 	public String home() {
 		TestsBPMN tests = new TestsBPMN();
 
-		return tests.checkCaps("ressources/diag.bpmn");
+		return  "bpmn1 : <br />" +
+				tests.checkCaps("ressources/diag.bpmn")
+				+ "<br />"+
+				"bpmn2 : <br />" +
+				tests.checkCaps("ressources/diag_ok.bpmn");
+
 	}
 
 	@RequestMapping("/hello")
