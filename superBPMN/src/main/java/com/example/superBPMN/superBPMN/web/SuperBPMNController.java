@@ -26,14 +26,22 @@ public class SuperBPMNController {
 	@RequestMapping("/list")
 	public String list(){
 		try {
-			DockerClient dockerClient = DockerClientBuilder.getInstance().build();
+			DefaultDockerClientConfig.Builder config
+					= DefaultDockerClientConfig.createDefaultConfigBuilder();
+			DockerClient dockerClient = DockerClientBuilder
+					.getInstance(config)
+					.build();
 
-			List<Container> containers = dockerClient.listContainersCmd()
-					.withShowSize(true)
-					.withShowAll(true)
-					.withStatusFilter("exited").exec();
+			String imageId = dockerClient.buildImageCmd()
+					.withDockerfile(new File("path/to/Dockerfile"))
+					.withPull(true)
+					.withNoCache(true)
+					.withTag("alpine:git")
+					.exec(new BuildImageResultCallback())
+					.awaitImageId();
 
-			return "a";
+			List<Container> containers = dockerClient.listContainersCmd().exec();
+			return containers.toString();
 		}
 		catch (Exception e){e.getMessage();
 		return e.getMessage();}
