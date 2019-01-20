@@ -27,8 +27,14 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-rest</artifactId>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -59,9 +65,10 @@
 		</dependency>
 
 		<dependency>
-			<groupId>com.amihaiemil.web</groupId>
-			<artifactId>docker-java-api</artifactId>
-			<version>0.0.9</version>
+			<groupId>com.github.docker-java</groupId>
+			<artifactId>docker-java</artifactId>
+			<!-- use latest version https://github.com/docker-java/docker-java/releases -->
+			<version>3.1.0</version>
 		</dependency>
 
 	</dependencies>
