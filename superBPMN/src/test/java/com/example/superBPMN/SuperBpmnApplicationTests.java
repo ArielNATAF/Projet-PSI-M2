@@ -1,4 +1,4 @@
-package com.example.superBPMN.superBPMN;
+package com.example.superBPMN;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

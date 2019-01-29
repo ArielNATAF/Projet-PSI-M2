@@ -1,6 +1,6 @@
-package com.example.superBPMN.superBPMN.web;
+package com.example.superBPMN.web;
 
-import com.example.superBPMN.superBPMN.Model.DockerChoice;
+import com.example.superBPMN.Model.DockerChoice;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

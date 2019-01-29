@@ -1,4 +1,4 @@
-package com.example.superBPMN.superBPMN.Model;
+package com.example.superBPMN.Model;
 
 public class DockerChoice {
 
