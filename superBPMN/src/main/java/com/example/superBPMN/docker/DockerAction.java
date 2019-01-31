@@ -32,13 +32,12 @@ public class DockerAction {
 		return list;
 	}
 
-	public String buildImageFromDockerFile(DockerClient dockerClient, String dockerfilePath, String tag){
+	public String buildImageFromDockerFile(DockerClient dockerClient, DockerImage dockerImage){
 
 		String imageId = dockerClient.buildImageCmd()
-				.withDockerfile(new File(dockerfilePath))
+				.withDockerfile(new File(dockerImage.getDockerfilePath()))
 				.withPull(true)
 				.withNoCache(true)
-				.withTag(tag)
 				.exec(new BuildImageResultCallback())
 				.awaitImageId();
 
@@ -67,7 +66,7 @@ public class DockerAction {
 		String imageId = dockerImage.getImageId();
 		String containerName = dockerImage.getImageName() + "_Container";
 		String containerFile = dockerImage.getContainerFile();
-		String hostFile = "/Users/arielnataf/Desktop/M2/PSI/Projet PSI M2/superBPMN/ressources/docker verif extension/result.txt";
+		String hostFile = dockerImage.getHostFile();
 
 		// Docker client
 		// Create container

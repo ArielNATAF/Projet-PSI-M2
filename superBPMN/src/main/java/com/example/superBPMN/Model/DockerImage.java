@@ -1,25 +1,46 @@
 package com.example.superBPMN.Model;
 
+import lombok.Data;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
 /**
  * Créé par Ariel NATAF, le 29/01/2019.
  * Master 2 Classique, MIAGE Nanterre
  */
+
+@Data
+@Entity
 public class DockerImage {
-	private String imageId;
+
+	private @Id @GeneratedValue Long Id;
 	private String imageName;
-	private String containerFile;
-
-	public String getImageName() {
-		return imageName;
-	}
-
-	public void setImageName(String imageName) {
-		this.imageName = imageName;
-	}
-
 	private String dockerfilePath;
+	private String imageId;
+	private String containerFile;
+	private String hostFile;
 
-	public DockerImage(String imageName, String dockerfilePath,  String imageId) {
+	private DockerImage(){}
+
+	public DockerImage(String imageName, String dockerfilePath, String imageId,
+					   String containerFile, String hostFile) {
+		this.imageName = imageName;
+		this.imageId = imageId;
+		this.dockerfilePath = dockerfilePath;
+		this.containerFile = containerFile;
+		this.hostFile = hostFile;
+	}
+
+	public DockerImage(String imageName, String dockerfilePath, String imageId, String containerFile) {
+		this.imageName = imageName;
+		this.imageId = imageId;
+		this.dockerfilePath = dockerfilePath;
+		this.containerFile = containerFile;
+	}
+
+	public DockerImage(String imageName, String dockerfilePath, String imageId) {
 		this.imageName = imageName;
 		this.imageId = imageId;
 		this.dockerfilePath = dockerfilePath;
@@ -32,29 +53,5 @@ public class DockerImage {
 
 	public DockerImage(String imageName ) {
 		this.imageName = imageName;
-	}
-
-	public String getImageId() {
-		return imageId;
-	}
-
-	public void setImageId(String imageId) {
-		this.imageId = imageId;
-	}
-
-	public String getContainerFile() {
-		return containerFile;
-	}
-
-	public void setContainerFile(String containerFile) {
-		this.containerFile = containerFile;
-	}
-
-	public String getDockerfilePath() {
-		return dockerfilePath;
-	}
-
-	public void setDockerfilePath(String dockerfilePath) {
-		this.dockerfilePath = dockerfilePath;
 	}
 }

@@ -1,4 +1,4 @@
-FROM python:2
+FROM python:slim
 
 ADD verif.py /
 ADD result.txt /

@@ -2,12 +2,14 @@ package com.example.superBPMN.web;
 
 import com.example.superBPMN.Model.ContainerCommand;
 import com.example.superBPMN.Model.DockerClientSingleton;
+import com.example.superBPMN.Model.DockerEnum;
 import com.example.superBPMN.Model.DockerImage;
 import com.example.superBPMN.docker.DockerAction;
 import com.github.dockerjava.api.DockerClient;
 import com.github.dockerjava.core.command.BuildImageResultCallback;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import javafx.scene.image.Image;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
@@ -44,14 +46,14 @@ public class SuperBPMNController {
 	@RequestMapping("/buildImage")
 	public String buildImage(){
 		try {
-			String dockerFilePath= "ressources/docker verif extension/Dockerfile";
-			String imageName = "verif";
+			DockerImage dockerImage = new DockerImage("verif",
+					"ressources/docker verif extension/Dockerfile");
 			DockerClient dockerClient = DockerClientSingleton.getInstance().dockerClient;
 			DockerAction da = new DockerAction();
-			String imageID = da.buildImageFromDockerFile(dockerClient, "ressources/docker verif extension/Dockerfile", "tag");
+			String imageID = da.buildImageFromDockerFile(dockerClient, dockerImage);
 
-			DockerImage dockerImage = new DockerImage(imageName, dockerFilePath, imageID);
 
+			dockerImage.setImageId(imageID);
 			return dockerImage.getImageId();
 		}
 		catch (Exception e){e.getMessage();
@@ -79,16 +81,11 @@ public class SuperBPMNController {
 	}
 
 
-	@RequestMapping("/copyContainer")
+	@RequestMapping("/copyFromContainer")
 	public String copyFromContainer(){
 		DockerClient dockerClient = DockerClientSingleton.getInstance().dockerClient;
 
-		String imageId = "python:git";
-		String containerFile = "./result.txt";
-
-		DockerImage dockerImage = new DockerImage("testcopycontainer");
-		dockerImage.setImageId(imageId);
-		dockerImage.setContainerFile(containerFile);
+		DockerImage dockerImage = DockerEnum.VERIF.dockerImage();
 		DockerAction da =new DockerAction();
 
 		return da.copyFileFromContainer(dockerClient, dockerImage);
