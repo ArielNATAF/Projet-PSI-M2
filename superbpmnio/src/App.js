@@ -2,9 +2,26 @@ import React, { Component } from 'react';
 //import logo from './logo.svg';
 import './App.css';
 import DockerImageList from "./components/DockerImageList";
+import FileUploader from "./components/fileUploader"
 import axios from "axios";
+import BPMNDropzone from './BPMNDropzone';
+import request from "superagent";
+
 
 class App extends Component {
+
+  onDrop = (files) => {
+    // POST to a test endpoint for demo purposes
+    
+    const req = request.post('https://localhost:8080/files');
+
+    files.forEach(file => {
+      req.attach(file.name, file);
+    });
+
+    req.end();
+    
+  }
 
   state = {
     dockerImages: []
@@ -13,11 +30,12 @@ class App extends Component {
   componentDidMount() {
     axios
       //.get("https://jsonplaceholder.typicode.com/users")
-      .get("http://localhost:8080/api/dockerImages")
+      .get("http://localhost:8080/dockerImages")
       .then(response => {
+        console.log(response);
 
         // create an array of contacts only with relevant data
-        const newDockerImages = response.data._embedded.dockerImages.map(c => {
+        const newDockerImages = response.data.map(c => {
           return {
             id: c.id,
             imageName: c.imageName,
@@ -43,7 +61,10 @@ class App extends Component {
     return (
       <div className="App">
         <DockerImageList dockerImages = {this.state.dockerImages}/>
+        <BPMNDropzone/>
+        <FileUploader/>
       </div>
+
     );
   }
 }

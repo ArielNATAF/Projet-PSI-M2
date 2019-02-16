@@ -25,10 +25,7 @@
 	</properties>
 
 	<dependencies>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-thymeleaf</artifactId>
-		</dependency>
+
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -40,7 +37,12 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
-
+		<!-- thymeleaf -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
+		<!-- JPA -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -51,7 +53,13 @@
 			<scope>runtime</scope>
 		</dependency>
 
+		<!-- MONGODB -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-mongodb</artifactId>
+		</dependency>
 
+		<!-- LOMBOK -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
@@ -63,12 +71,15 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<!-- MOCKMVC ??? -->
 		<dependency>
 			<groupId>org.springframework.restdocs</groupId>
 			<artifactId>spring-restdocs-mockmvc</artifactId>
 			<scope>test</scope>
 		</dependency>
 
+		<!-- DOCKER-JAVA -->
 		<dependency>
 			<groupId>com.github.docker-java</groupId>
 			<artifactId>docker-java</artifactId>
@@ -76,19 +87,15 @@
 			<version>3.1.0</version>
 		</dependency>
 
+		<!-- GLASSFISH -->
 		<dependency>
 			<groupId>org.glassfish</groupId>
 			<artifactId>javax.json</artifactId>
 			<version>1.1</version>
 		</dependency>
 
-		<dependency>
-			<groupId>com.github.docker-java</groupId>
-			<artifactId>docker-java</artifactId>
-			<!-- use latest version https://github.com/docker-java/docker-java/releases -->
-			<version>3.1.0</version>
-		</dependency>
 
+		<!-- GSON -->
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>

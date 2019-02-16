@@ -1,5 +1,6 @@
-package com.example.superBPMN.Model;
+package com.example.superBPMN.repositories;
 
+import com.example.superBPMN.Model.Result;
 import org.springframework.data.repository.CrudRepository;
 
 /**

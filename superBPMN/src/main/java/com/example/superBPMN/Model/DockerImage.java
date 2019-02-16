@@ -1,6 +1,7 @@
 package com.example.superBPMN.Model;
 
 import lombok.Data;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,10 +13,10 @@ import javax.persistence.Id;
  */
 
 @Data
-@Entity
+@Document
 public class DockerImage {
 
-	private @Id @GeneratedValue Long Id;
+	private @Id @GeneratedValue String Id;
 	private String imageName;
 	private String dockerfilePath;
 	private String imageId;

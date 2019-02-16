@@ -9,13 +9,13 @@ f = open(filename,'w+')
 
 if len(sys.argv) == 1:
     f = open(filename,'w+')
-    print >>f, 'pas d\'arguments'
-    print 00
+    print ('pas d\'arguments', file=f)
+    print ('00')
 
 else : 
     if sys.argv[1].endswith('.bpmn'):
-        print >>f, 'fichier avec extension .bpmn'
-        print 11   
+        print ('fichier avec extension .bpmn',file=f)
+        print ('11')
     else:
-        print >>f, 'pas un fichier avec extension .bpmn'
-        print 10   
+        print ('pas un fichier avec extension .bpmn', file=f)
+        print ('10')

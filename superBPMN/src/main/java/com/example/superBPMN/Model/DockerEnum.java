@@ -7,7 +7,7 @@ package com.example.superBPMN.Model;
 public enum DockerEnum {
 	VERIF(new DockerImage("testcopycontainer",
 			"ressources/docker verif extension/Dockerfile",
-			"python:git", "./result.txt",
+			"6777378f4263", "./result.txt",
 			"ressources/docker verif extension/result.txt")),
 	ALPINE(new DockerImage("alpine",
 			"ressources/docker alpine/Dockerfile",

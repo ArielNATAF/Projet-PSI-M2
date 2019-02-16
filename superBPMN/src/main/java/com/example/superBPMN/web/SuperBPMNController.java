@@ -10,9 +10,13 @@ import com.github.dockerjava.core.command.BuildImageResultCallback;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import javafx.scene.image.Image;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 
@@ -21,6 +25,7 @@ import java.util.List;
  * Master 2 Classique, MIAGE Nanterre
  */
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class SuperBPMNController {
 
@@ -94,6 +99,22 @@ public class SuperBPMNController {
 	@RequestMapping("/hello")
 	public String sayHello() {
 		return "Hello  World !";
+	}
+
+	@RequestMapping(method = RequestMethod.POST)
+	public ResponseEntity handleFileUpload(@RequestParam("file") MultipartFile file) {
+		try {
+			System.out.printf("File name=%s, size=%s\n", file.getOriginalFilename(),file.getSize());
+			//creating a new file in some local directory
+			File fileToSave = new File("ressources/uploads/" + file.getOriginalFilename());
+			//copy file content from received file to new local file
+			file.transferTo(fileToSave);
+		} catch (IOException ioe) {
+			//if something went bad, we need to inform client about it
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+		//everything was OK, return HTTP OK status (200) to the client
+		return ResponseEntity.ok().build();
 	}
 
 }

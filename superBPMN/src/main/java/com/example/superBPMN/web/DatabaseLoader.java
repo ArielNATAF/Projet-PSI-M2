@@ -1,6 +1,10 @@
 package com.example.superBPMN.web;
 
+
+
 import com.example.superBPMN.Model.*;
+// import com.example.superBPMN.repositories.DockerRepository;
+import com.example.superBPMN.repositories.ResultRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -9,6 +13,10 @@ import org.springframework.stereotype.Component;
  * Créé par Ariel NATAF, le 30/01/2019.
  * Master 2 Classique, MIAGE Nanterre
  */
+
+
+/*
+
 @Component
 public class DatabaseLoader implements CommandLineRunner {
 	private final DockerRepository repository;
@@ -32,3 +40,5 @@ public class DatabaseLoader implements CommandLineRunner {
 		this.resultrepository.save(new Result("111111","test"));
 	}
 }
+
+*/
