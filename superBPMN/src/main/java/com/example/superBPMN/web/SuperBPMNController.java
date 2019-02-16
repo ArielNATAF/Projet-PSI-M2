@@ -9,7 +9,6 @@ import com.github.dockerjava.api.DockerClient;
 import com.github.dockerjava.core.command.BuildImageResultCallback;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import javafx.scene.image.Image;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -86,14 +85,14 @@ public class SuperBPMNController {
 	}
 
 
-	@RequestMapping("/copyFromContainer")
+	@RequestMapping( "/copyFromContainer")
 	public String copyFromContainer(){
 		DockerClient dockerClient = DockerClientSingleton.getInstance().dockerClient;
 
 		DockerImage dockerImage = DockerEnum.VERIF.dockerImage();
 		DockerAction da =new DockerAction();
 
-		return da.copyFileFromContainer(dockerClient, dockerImage);
+		return da.copyFileFromContainer(dockerClient, dockerImage, "mon.bpmn");
 	}
 
 	@RequestMapping("/hello")
@@ -101,9 +100,9 @@ public class SuperBPMNController {
 		return "Hello  World !";
 	}
 
-	@RequestMapping(method = RequestMethod.POST)
+	@RequestMapping(path = "/files", method = RequestMethod.POST)
 	public ResponseEntity handleFileUpload(@RequestParam("file") MultipartFile file) {
-		try {
+/*		try {
 			System.out.printf("File name=%s, size=%s\n", file.getOriginalFilename(),file.getSize());
 			//creating a new file in some local directory
 			File fileToSave = new File("ressources/uploads/" + file.getOriginalFilename());
@@ -111,6 +110,18 @@ public class SuperBPMNController {
 			file.transferTo(fileToSave);
 		} catch (IOException ioe) {
 			//if something went bad, we need to inform client about it
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+*/
+		try{
+			System.out.printf("File name=%s, size=%s\n", file.getOriginalFilename(),file.getSize());
+
+			DockerClient dockerClient = DockerClientSingleton.getInstance().dockerClient;
+
+			DockerImage dockerImage = DockerEnum.VERIF.dockerImage();
+			DockerAction da =new DockerAction();
+			da.copyFileFromContainer(dockerClient, dockerImage, file.getOriginalFilename());
+		}catch (Exception e){e.getMessage();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
 		//everything was OK, return HTTP OK status (200) to the client

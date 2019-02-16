@@ -4,7 +4,7 @@ import './App.css';
 import DockerImageList from "./components/DockerImageList";
 import FileUploader from "./components/fileUploader"
 import axios from "axios";
-import BPMNDropzone from './BPMNDropzone';
+//import BPMNDropzone from './BPMNDropzone';
 import request from "superagent";
 
 
@@ -12,15 +12,11 @@ class App extends Component {
 
   onDrop = (files) => {
     // POST to a test endpoint for demo purposes
-    
     const req = request.post('https://localhost:8080/files');
-
     files.forEach(file => {
       req.attach(file.name, file);
     });
-
     req.end();
-    
   }
 
   state = {
@@ -33,7 +29,6 @@ class App extends Component {
       .get("http://localhost:8080/dockerImages")
       .then(response => {
         console.log(response);
-
         // create an array of contacts only with relevant data
         const newDockerImages = response.data.map(c => {
           return {
@@ -44,7 +39,6 @@ class App extends Component {
             imageId: c.imageId
           };
         });
-
         // create a new "State" object without mutating 
         // the original State object. 
         const newState = Object.assign({}, this.state, {
@@ -61,9 +55,9 @@ class App extends Component {
     return (
       <div className="App">
         <DockerImageList dockerImages = {this.state.dockerImages}/>
-        <BPMNDropzone/>
         <FileUploader/>
       </div>
+//        <BPMNDropzone/>
 
     );
   }

@@ -16,10 +16,8 @@ import org.apache.commons.compress.archivers.tar.TarArchiveInputStream;
 import org.apache.commons.io.IOUtils;
 import sun.util.calendar.Gregorian;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,7 +68,7 @@ public class DockerAction {
 		return list;
 	}
 
-	public String copyFileFromContainer(DockerClient dockerClient, DockerImage dockerImage){
+	public String copyFileFromContainer(DockerClient dockerClient, DockerImage dockerImage, String filename){
 
 		// Data
 		String imageId = dockerImage.getImageId();
@@ -83,7 +81,7 @@ public class DockerAction {
 		try (CreateContainerCmd createContainer = dockerClient
 				.createContainerCmd(imageId)
 				.withName(containerName)
-				.withCmd("mon.bpmn")
+				.withCmd(filename)
 
 		) {
 			createContainer.withTty(true);
@@ -120,6 +118,17 @@ public class DockerAction {
 			unTar(tarStream, new File(hostFile));
 		}catch (IOException e){e.getLocalizedMessage();}
 
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(hostFile));
+			String line = null;
+			System.out.println("  For file:\n    "+filename);
+			System.out.println("  Content result:");
+			while ((line = br.readLine()) != null) {
+				System.out.println("    "+line);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		// Stop container
 		//dockerClient.killContainerCmd(containerName).exec();
 		//dockerClient.stopContainerCmd(containerName).exec();

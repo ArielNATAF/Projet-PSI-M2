@@ -14,7 +14,7 @@ export class FileUploader extends Component {
         console.log("Uploading file", event.target.files[0]);
         data.append('file', event.target.files[0]);
         data.append('name', 'my_file');
-        data.append('description', 'this file is uploaded by young padawan');
+        data.append('description', 'test fichier BPMN\n XoXOxoxoxo');
         let self = this;
         //calling async Promise and handling response or error situation
         this.fileService.uploadFileToServer(data).then((response) => {
