@@ -14,8 +14,8 @@ Ces vérifications se feraient par des programmes contenus dans des Docker pour 
 
 Version 1.0.0.beta
 
- - Voir les images dockers installées ;
  - Vérifier l'extension d'un fichier BPMN.
+ - Voir l'historique des vérifications.
 
 ## Installation
 
@@ -53,11 +53,16 @@ Laissez IntelliJ cofigurer le projet.
   "ressources/docker verif extension/Dockerfile",  
   "6777378f4263", "./result.txt",  
   "ressources/docker verif extension/result.txt"))` *6777378f4263* par l'identifant de l'image Docker générée.
-  
+
+### Installer MongoDB (sur Mac avec homebrew)
+
+Dans le terminal, entrez `brew install mongodb`
+
  ### Lancer l'interface la partie ;
 
   ### Lancer l'application (avec Yarn) ;
 
+ - Dans le terminal, lancez la commande `brew services start mongo`
  - Dans intelliJ appuyez sur « Run »![enter image description here](https://www.jetbrains.com/help/img/idea/2018.3/icons.actions.execute.svg@2x.png) ;
  - Via un terminal, allez dans le répertoire **superbpmnio** ; 
  - Lancez la commande `yarn start` ;
@@ -66,4 +71,4 @@ Laissez IntelliJ cofigurer le projet.
 ### Utiliser la vérification d'extension de fichier .bpmn
 
  - Via l'interface de `localhost:3000`, appuyez sur « choisir » ;
- - Dans la console d'IntelliJ le résultat de la vérification s'affiche.
+ - Le résultat de la vérification s'affiche quand on rafraîchit la page.

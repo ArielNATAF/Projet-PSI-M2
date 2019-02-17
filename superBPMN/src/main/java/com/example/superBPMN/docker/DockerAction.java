@@ -1,28 +1,27 @@
 package com.example.superBPMN.docker;
 
 import com.example.superBPMN.Model.DockerImage;
+import com.example.superBPMN.Model.ResultVerif;
 import com.github.dockerjava.api.DockerClient;
 import com.github.dockerjava.api.command.CreateContainerCmd;
-import com.github.dockerjava.api.command.DockerCmdExecFactory;
 import com.github.dockerjava.api.command.ExecCreateCmdResponse;
 import com.github.dockerjava.api.model.Container;
 import com.github.dockerjava.api.model.Image;
 import com.github.dockerjava.core.command.BuildImageResultCallback;
-import com.github.dockerjava.core.command.ExecStartCmdImpl;
 import com.github.dockerjava.core.command.ExecStartResultCallback;
-import com.github.dockerjava.jaxrs.JerseyDockerCmdExecFactory;
 import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
 import org.apache.commons.compress.archivers.tar.TarArchiveInputStream;
 import org.apache.commons.io.IOUtils;
-import sun.util.calendar.Gregorian;
+
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.WebResource;
 
 import java.io.*;
-import java.nio.file.Path;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-
-import static org.apache.tomcat.util.http.fileupload.util.Streams.asString;
-import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
 
 /**
  * Créé par Ariel NATAF, le 20/01/2019.
@@ -121,25 +120,33 @@ public class DockerAction {
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(hostFile));
 			String line = null;
-			System.out.println("  For file:\n    "+filename);
-			System.out.println("  Content result:");
+
+			StringBuffer resulttext= new StringBuffer();;
+			resulttext.append("For file:"+filename+" ; ");
+			resulttext.append("result:");
 			while ((line = br.readLine()) != null) {
-				System.out.println("    "+line);
+				resulttext.append(" "+line+",");
 			}
+
+			// Stop container
+			//dockerClient.killContainerCmd(containerName).exec();
+			//dockerClient.stopContainerCmd(containerName).exec();
+
+			// Remove container
+			dockerClient.removeContainerCmd(containerName).exec();
+
+			Timestamp ts = new Timestamp(System.currentTimeMillis());
+			ResultVerif resultVerif = new ResultVerif(String.valueOf(ts),
+						imageId,containerFile,resulttext.toString());
+			System.out.println(resultVerif.toString());
+
+			postResultVerif(resultVerif);
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		// Stop container
-		//dockerClient.killContainerCmd(containerName).exec();
-		//dockerClient.stopContainerCmd(containerName).exec();
-
-		// Remove container
-		dockerClient.removeContainerCmd(containerName).exec();
-
 		return null;
 	}
-
-
 
 	public static void unTar(TarArchiveInputStream tis, File destFile)
 			throws IOException {
@@ -158,5 +165,41 @@ public class DockerAction {
 		tis.close();
 	}
 
+
+	public void postResultVerif(ResultVerif resultVerif) {
+
+		try {
+			Client client = Client.create();
+
+			WebResource webResource = client
+					.resource("http://localhost:8080/resultVerifs");
+
+			String input = "{"+
+					"\"time\":\""+ resultVerif.getTime() +"\""+
+					",\"imageId\":\""+resultVerif.getImageId()+"\""+
+					",\"parameter\":\"" +resultVerif.getParameter()+"\""+
+					",\"comment\":\"" +resultVerif.getComment()+"\"}";
+
+			System.out.println(input);
+			ClientResponse response = webResource.type("application/json")
+					.post(ClientResponse.class, input);
+
+			if (response.getStatus() != 200) {
+				throw new RuntimeException("Failed : HTTP error code : "
+						+ response.getStatus());
+			}
+
+			System.out.println("Output from Server .... \n");
+			String output = response.getEntity(String.class);
+			System.out.println(output);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+
+
+	}
 
 }

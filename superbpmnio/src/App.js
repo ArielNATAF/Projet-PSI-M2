@@ -6,7 +6,38 @@ import FileUploader from "./components/fileUploader"
 import axios from "axios";
 //import BPMNDropzone from './BPMNDropzone';
 import request from "superagent";
+import ResultVerifList from './components/ResultVerifList';
 
+const footerStyle = {
+  backgroundColor: "black",
+  fontColor: "white",
+  fontSize: "12px",
+  color: "white",
+  borderTop: "1px solid #E7E7E7",
+  textAlign: "center",
+  padding: "13px",
+  position: "fixed",
+  left: "0",
+  bottom: "0",
+  height: "10px",
+  width: "100%"
+};
+
+const phantomStyle = {
+  display: "block",
+  padding: "13px",
+  height: "10px",
+  width: "100%"
+};
+
+function Footer({ children }) {
+  return (
+    <div>
+      <div style={phantomStyle} />
+      <div style={footerStyle}>{children}</div>
+    </div>
+  );
+}
 
 class App extends Component {
 
@@ -20,12 +51,12 @@ class App extends Component {
   }
 
   state = {
-    dockerImages: []
+    dockerImages: [],
+    resultVerifs : []
   };
 
   componentDidMount() {
-    axios
-      //.get("https://jsonplaceholder.typicode.com/users")
+/*    axios
       .get("http://localhost:8080/dockerImages")
       .then(response => {
         console.log(response);
@@ -44,8 +75,27 @@ class App extends Component {
         const newState = Object.assign({}, this.state, {
           dockerImages: newDockerImages
         });
-
         // store the new state object in the component's state
+        this.setState(newState);
+      })
+      .catch(error => console.log(error));
+*/
+    axios
+      .get("http://localhost:8080/resultVerifs")
+      .then(response => {
+        console.log(response);
+        const newResultVerifs = response.data.map(c => {
+          return {
+            Id_result: c.Id_result,
+            imageId: c.imageId,
+            time: c.time,
+            parameter: c.parameter,
+            comment: c.comment
+          };
+        });
+        const newState = Object.assign({}, this.state, {
+          resultVerifs: newResultVerifs
+        });
         this.setState(newState);
       })
       .catch(error => console.log(error));
@@ -54,11 +104,12 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        <img src={require('./logo.png')} alt="logo" />
         <DockerImageList dockerImages = {this.state.dockerImages}/>
         <FileUploader/>
+        <ResultVerifList resultVerifs={this.state.resultVerifs} />
+        <Footer><span>Ariel Nataf - 2019 - Projet PSI - GPLv3 - https://github.com/ArielNATAF/Projet-PSI-M2</span></Footer>
       </div>
-//        <BPMNDropzone/>
-
     );
   }
 }

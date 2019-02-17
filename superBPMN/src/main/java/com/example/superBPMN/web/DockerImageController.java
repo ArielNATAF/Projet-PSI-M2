@@ -38,11 +38,6 @@ public class DockerImageController {
 		dockerImageService.deleteDockerImagebyId(id);
 	}
 
-//	@DeleteMapping
-	public void deleteDockerImagebyImageName(@RequestParam("imageName") String imageName) {
-		dockerImageService.deleteDockerImagebyImageName(imageName);
-	}
-
 	@PostMapping()
 	public ResponseEntity<?> addorUpdateDockerImage(@RequestBody DockerImage
 															dockerImage) {

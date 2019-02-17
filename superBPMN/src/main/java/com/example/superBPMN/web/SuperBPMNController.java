@@ -95,11 +95,6 @@ public class SuperBPMNController {
 		return da.copyFileFromContainer(dockerClient, dockerImage, "mon.bpmn");
 	}
 
-	@RequestMapping("/hello")
-	public String sayHello() {
-		return "Hello  World !";
-	}
-
 	@RequestMapping(path = "/files", method = RequestMethod.POST)
 	public ResponseEntity handleFileUpload(@RequestParam("file") MultipartFile file) {
 /*		try {
