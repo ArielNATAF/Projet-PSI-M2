@@ -4,6 +4,9 @@
 
 Projet du cours de PSI de M2 MIAGE à Paris Nanterre en 2018-2019, par Ariel NATAF.
 
+Pour voir l'application fonctionner, regardez la vidéo :
+
+[![Oscar Nominated video in "PSI presentation" category](http://img.youtube.com/vi/9WDrkakHZPA/0.jpg)](https://www.youtube.com/watch?v=9WDrkakHZPA)
 
 ## SuperBPMN ?
 
