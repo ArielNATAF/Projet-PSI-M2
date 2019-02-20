@@ -29,11 +29,6 @@ public class DockerImageServiceImpl implements DockerImageService {
 	}
 
 	@Override
-	public void deleteDockerImagebyImageName(String ImageName) {
-		dockerRepository.deleteById(ImageName);
-	}
-
-	@Override
 	public void saveOrUpdateDockerImage(DockerImage dockerImage) {
 		dockerRepository.save(dockerImage);
 	}

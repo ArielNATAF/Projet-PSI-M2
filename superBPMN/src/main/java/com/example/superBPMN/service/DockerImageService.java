@@ -14,8 +14,6 @@ public interface DockerImageService {
 
 	void deleteDockerImagebyId(String id);
 
-	void deleteDockerImagebyImageName(String imageName);
-
 	void saveOrUpdateDockerImage(DockerImage dockerImage);
 
 }

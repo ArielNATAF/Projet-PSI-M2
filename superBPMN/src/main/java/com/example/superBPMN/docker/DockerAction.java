@@ -30,7 +30,6 @@ import java.util.List;
 public class DockerAction {
 
 	public List<String> listImages(DockerClient dockerClient){
-
 		List<String> list = new ArrayList<>();
 		List<Image> images = dockerClient.listImagesCmd().exec();
 		for (Image img : images){
@@ -49,22 +48,6 @@ public class DockerAction {
 				.awaitImageId();
 
 		return imageId;
-	}
-
-
-	public String createContainerAction(DockerClient dockerClient, String createContainerCmd){
-
-		return createContainerCmd;
-	}
-
-	public List<String> listContainers(DockerClient dockerClient){
-
-		List<String> list = new ArrayList<>();
-		List<Container> containers = dockerClient.listContainersCmd().exec();
-		for (Container ctn : containers){
-			list.add(ctn.toString());
-		}
-		return list;
 	}
 
 	public String copyFileFromContainer(DockerClient dockerClient, DockerImage dockerImage, String filename){
@@ -194,12 +177,8 @@ public class DockerAction {
 			System.out.println(output);
 
 		} catch (Exception e) {
-
 			e.printStackTrace();
-
 		}
-
-
 	}
 
 }
